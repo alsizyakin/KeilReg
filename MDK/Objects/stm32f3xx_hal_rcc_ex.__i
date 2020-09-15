@@ -1,0 +1,10 @@
+--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\Inc
+-I.\RTE\Device\STM32F303CBTx
+-I.\RTE\_STM32F303CBT
+-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\Core\Include
+-IC:\Keil_v5\ARM\PACK\ARM\CMSIS\5.6.0\CMSIS\DSP\Include
+-IC:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include
+-IC:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\STM32F3xx_HAL_Driver\Inc
+-IC:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\STM32F3xx_HAL_Driver\Inc\Legacy
+-D__UVISION_VERSION="529" -D_RTE_ -DSTM32F303xC -DUSE_HAL_DRIVER -DSTM32F303xC -DARM_MATH_CM4 -D__FPU_PRESENT="1U"
+-o .\objects\stm32f3xx_hal_rcc_ex.o --omf_browse .\objects\stm32f3xx_hal_rcc_ex.crf --depend .\objects\stm32f3xx_hal_rcc_ex.d "C:\Keil_v5\ARM\PACK\Keil\STM32F3xx_DFP\2.1.0\Drivers\STM32F3xx_HAL_Driver\Src\stm32f3xx_hal_rcc_ex.c"

@@ -1,0 +1,11 @@
+Clock Div = 2
+Conv Count = 6	 CNT = 208
+Conv Count = 12  CNT = 375 / 461
+
+Clock Div = 1
+Conv Count = 6	 CNT = 122
+Conv Count = 12  CNT = 211 / 283
+
+Clock Div = 1 with AUTODLY
+Conv Count = 6	 CNT = 173
+Conv Count = 12  CNT = 316 / 400
