@@ -1,6 +1,6 @@
 Dependencies for Project 'STM32F303CBT_Prj', Target 'STM32F303CBT': (DO NOT MODIFY !)
 CompilerVersion: 5060750::V5.06 update 6 (build 750)::.\ARMCC
-F (..\Src\main.c)(0x5F5F65C8)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\Inc-I.\RTE\_STM32F303CBT-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F303xC -D_RTE_ -DSTM32F303xC -DARM_MATH_CM4 -D__FPU_PRESENT="1U"-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
+F (..\Src\main.c)(0x5F68AFE1)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\Inc-I.\RTE\_STM32F303CBT-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F303xC -D_RTE_ -DSTM32F303xC -DARM_MATH_CM4 -D__FPU_PRESENT="1U"-o .\objects\main.o --omf_browse .\objects\main.crf --depend .\objects\main.d)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f3xx.h)(0x594A6F4E)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f303xc.h)(0x594A6F4E)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\core_cm4.h)(0x5E8F1772)
@@ -10,20 +10,20 @@ I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5E8F1772)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\mpu_armv7.h)(0x5E8F1772)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include\system_stm32f3xx.h)(0x594A6F4E)
-I (..\Inc\defs.h)(0x5F5F7394)
+I (..\Inc\defs.h)(0x5F68AEE1)
 I (..\Inc\VectCalc.h)(0x5E617A86)
-I (..\Inc\inits.h)(0x5F589A4A)
+I (..\Inc\inits.h)(0x5F686F18)
 I (..\Inc\measurement.h)(0x5E617AC4)
-I (..\Inc\dfilt.h)(0x5F608DC9)
+I (..\Inc\dfilt.h)(0x5F6844A6)
 I (..\Inc\motorcontrol.h)(0x5E284CFC)
 I (..\Inc\delay.h)(0x5E3AAC88)
 I (..\Inc\Tims.h)(0x5E05A7AC)
-F (..\Src\inits.c)(0x5F58AD56)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\Inc-I.\RTE\_STM32F303CBT-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F303xC -D_RTE_ -DSTM32F303xC -DARM_MATH_CM4 -D__FPU_PRESENT="1U"-o .\objects\inits.o --omf_browse .\objects\inits.crf --depend .\objects\inits.d)
-I (..\Inc\inits.h)(0x5F589A4A)
+F (..\Src\inits.c)(0x5F686F18)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\Inc-I.\RTE\_STM32F303CBT-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F303xC -D_RTE_ -DSTM32F303xC -DARM_MATH_CM4 -D__FPU_PRESENT="1U"-o .\objects\inits.o --omf_browse .\objects\inits.crf --depend .\objects\inits.d)
+I (..\Inc\inits.h)(0x5F686F18)
 I (..\Inc\measurement.h)(0x5E617AC4)
-I (..\Inc\dfilt.h)(0x5F608DC9)
+I (..\Inc\dfilt.h)(0x5F6844A6)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
-I (..\Inc\defs.h)(0x5F5F7394)
+I (..\Inc\defs.h)(0x5F68AEE1)
 I (..\Inc\VectCalc.h)(0x5E617A86)
 I (..\Inc\delay.h)(0x5E3AAC88)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f3xx.h)(0x594A6F4E)
@@ -52,13 +52,13 @@ I (C:\Keil_v5\ARM\ARMCC\include\math.h)(0x5EC7BC54)
 I (C:\Keil_v5\ARM\ARMCC\include\float.h)(0x5EC7BC4C)
 I (C:\Keil_v5\ARM\ARMCC\include\limits.h)(0x5EC7BC42)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Include\arm_common_tables.h)(0x5E8F1772)
-I (..\Inc\defs.h)(0x5F5F7394)
+I (..\Inc\defs.h)(0x5F68AEE1)
 F (..\Src\dfilt.c)(0x5E62C73C)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\Inc-I.\RTE\_STM32F303CBT-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F303xC -D_RTE_ -DSTM32F303xC -DARM_MATH_CM4 -D__FPU_PRESENT="1U"-o .\objects\dfilt.o --omf_browse .\objects\dfilt.crf --depend .\objects\dfilt.d)
-I (..\Inc\dfilt.h)(0x5F608DC9)
+I (..\Inc\dfilt.h)(0x5F6844A6)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
 F (..\Src\pi.c)(0x5E62C726)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\Inc-I.\RTE\_STM32F303CBT-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F303xC -D_RTE_ -DSTM32F303xC -DARM_MATH_CM4 -D__FPU_PRESENT="1U"-o .\objects\pi.o --omf_browse .\objects\pi.crf --depend .\objects\pi.d)
 I (..\Inc\pi.h)(0x5E62C724)
-F (..\Src\interrupts.c)(0x5F5F63A5)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\Inc-I.\RTE\_STM32F303CBT-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F303xC -D_RTE_ -DSTM32F303xC -DARM_MATH_CM4 -D__FPU_PRESENT="1U"-o .\objects\interrupts.o --omf_browse .\objects\interrupts.crf --depend .\objects\interrupts.d)
+F (..\Src\interrupts.c)(0x5F689669)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\Inc-I.\RTE\_STM32F303CBT-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F303xC -D_RTE_ -DSTM32F303xC -DARM_MATH_CM4 -D__FPU_PRESENT="1U"-o .\objects\interrupts.o --omf_browse .\objects\interrupts.crf --depend .\objects\interrupts.d)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f3xx.h)(0x594A6F4E)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f303xc.h)(0x594A6F4E)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\core_cm4.h)(0x5E8F1772)
@@ -68,13 +68,13 @@ I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5E8F1772)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\mpu_armv7.h)(0x5E8F1772)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include\system_stm32f3xx.h)(0x594A6F4E)
-I (..\Inc\defs.h)(0x5F5F7394)
+I (..\Inc\defs.h)(0x5F68AEE1)
 I (..\Inc\motorcontrol.h)(0x5E284CFC)
 F (..\Src\measurement.c)(0x5F561D66)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\Inc-I.\RTE\_STM32F303CBT-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F303xC -D_RTE_ -DSTM32F303xC -DARM_MATH_CM4 -D__FPU_PRESENT="1U"-o .\objects\measurement.o --omf_browse .\objects\measurement.crf --depend .\objects\measurement.d)
-I (..\Inc\dfilt.h)(0x5F608DC9)
+I (..\Inc\dfilt.h)(0x5F6844A6)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
 I (..\Inc\measurement.h)(0x5E617AC4)
-I (..\Inc\defs.h)(0x5F5F7394)
+I (..\Inc\defs.h)(0x5F68AEE1)
 I (..\Inc\VectCalc.h)(0x5E617A86)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f3xx.h)(0x594A6F4E)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f303xc.h)(0x594A6F4E)
@@ -84,13 +84,13 @@ I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5E8F1772)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\mpu_armv7.h)(0x5E8F1772)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include\system_stm32f3xx.h)(0x594A6F4E)
-F (..\Src\motorcontrol.c)(0x5F609437)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\Inc-I.\RTE\_STM32F303CBT-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F303xC -D_RTE_ -DSTM32F303xC -DARM_MATH_CM4 -D__FPU_PRESENT="1U"-o .\objects\motorcontrol.o --omf_browse .\objects\motorcontrol.crf --depend .\objects\motorcontrol.d)
+F (..\Src\motorcontrol.c)(0x5F68B020)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\Inc-I.\RTE\_STM32F303CBT-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F303xC -D_RTE_ -DSTM32F303xC -DARM_MATH_CM4 -D__FPU_PRESENT="1U"-o .\objects\motorcontrol.o --omf_browse .\objects\motorcontrol.crf --depend .\objects\motorcontrol.d)
 I (..\Inc\motorcontrol.h)(0x5E284CFC)
-I (..\Inc\dfilt.h)(0x5F608DC9)
+I (..\Inc\dfilt.h)(0x5F6844A6)
 I (C:\Keil_v5\ARM\ARMCC\include\stdint.h)(0x5EC7BC4C)
 I (..\Inc\pi.h)(0x5E62C724)
 I (..\Inc\VectCalc.h)(0x5E617A86)
-I (..\Inc\defs.h)(0x5F5F7394)
+I (..\Inc\defs.h)(0x5F68AEE1)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f3xx.h)(0x594A6F4E)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include\stm32f303xc.h)(0x594A6F4E)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\core_cm4.h)(0x5E8F1772)
@@ -117,7 +117,7 @@ I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\cmsis_armcc.h)(0x5E8F1772)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include\mpu_armv7.h)(0x5E8F1772)
 I (C:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include\system_stm32f3xx.h)(0x594A6F4E)
-I (..\Inc\defs.h)(0x5F5F7394)
+I (..\Inc\defs.h)(0x5F68AEE1)
 F (..\Src\mymath.c)(0x5E04A900)(--c99 -c --cpu Cortex-M4.fp.sp -g -O0 --apcs=interwork --split_sections -I ..\Inc-I.\RTE\_STM32F303CBT-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\Core\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Include-IC:\Users\FluxUser\AppData\Local\Arm\Packs\Keil\STM32F3xx_DFP\2.1.0\Drivers\CMSIS\Device\ST\STM32F3xx\Include-D__UVISION_VERSION="531" -D_RTE_ -DSTM32F303xC -D_RTE_ -DSTM32F303xC -DARM_MATH_CM4 -D__FPU_PRESENT="1U"-o .\objects\mymath.o --omf_browse .\objects\mymath.crf --depend .\objects\mymath.d)
 I (..\Inc\mymath.h)(0x5E04A900)
 F (C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Lib\ARM\arm_cortexM4lf_math.lib)(0x5E8F1774)()

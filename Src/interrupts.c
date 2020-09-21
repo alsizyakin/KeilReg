@@ -3,15 +3,19 @@
 #include "defs.h"
 #include "motorcontrol.h"
 
-
+int faultCounterAdc1, faultCounterAdc2, faultCounterAdc3;
 /**********************************************************************
 Timer1 PWM Interrupt Service Routine()
 **********************************************************************/
 void TIM1_UP_TIM16_IRQHandler(void){
     
 	DMA_ENABLE();
+	
 
 	TIM1_IF_CLEAR();	//clear TIM1 interrupt flag
+	faultCounterAdc1 = 0;
+	faultCounterAdc2 = 0;
+	faultCounterAdc3 = 0;
 	 
 }
 
@@ -41,17 +45,22 @@ ADC1-4  Interrupt Service Routines()
 void ADC1_2_IRQHandler(void){
 	
 	if (READ_BIT(ADC1->ISR,	ADC_ISR_AWD1)){
-		stopMotor();
 		SET_BIT(ADC1->ISR,	ADC_ISR_AWD1);
-		Flags.CurrentState = STATE_FAULT;
-		LED_ON(BUTTON_1);
+		if (faultCounterAdc1 ++ > 2) {
+			stopMotor();
+			
+			Flags.CurrentState = STATE_FAULT;
+			LED_ON(BUTTON_1);
+		}
 	}
 	
 	if (READ_BIT(ADC2->ISR,	ADC_ISR_AWD1)){
-		stopMotor();
 		SET_BIT(ADC2->ISR,	ADC_ISR_AWD1);
-		Flags.CurrentState = STATE_FAULT;
-		LED_ON(BUTTON_1);
+		if (faultCounterAdc2 ++ > 2) {
+			stopMotor();
+			Flags.CurrentState = STATE_FAULT;
+			LED_ON(BUTTON_1);
+		}
 	}
 	
 }
@@ -59,10 +68,12 @@ void ADC1_2_IRQHandler(void){
 void ADC3_IRQHandler(void){
 	
 	if (READ_BIT(ADC3->ISR,	ADC_ISR_AWD1)){
-		stopMotor();
 		SET_BIT(ADC3->ISR,	ADC_ISR_AWD1);
-		Flags.CurrentState = STATE_FAULT;
-		LED_ON(BUTTON_1);
+		if (faultCounterAdc3 ++ > 2){
+			stopMotor();
+			Flags.CurrentState = STATE_FAULT;
+			LED_ON(BUTTON_1);
+		}
 	}
 	
 }

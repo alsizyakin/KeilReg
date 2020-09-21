@@ -7,6 +7,8 @@ void init_ports(void);
 
 void init_comp(void);
 
+void init_dac(void);
+
 void init_adc(void);
 
 void init_awd(void);

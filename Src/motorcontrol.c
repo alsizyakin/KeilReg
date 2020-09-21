@@ -36,17 +36,17 @@ void initVariables(){
 	Timer1Period = (((float)SystemCoreClock / (float)FPWM)/2.F)-1.F;
 	
 	// Motor params
-	MotorParam_1.R 			= 0.8F;
-	MotorParam_1.psi 		= 0.082;//769F;
+	MotorParam_1.R 			= 1.4F;
+	MotorParam_1.psi 		= 0.0769;//0.082F;
 	MotorParam_1.Ld 		= 2.5e-3F;
 	MotorParam_1.Lq 		= 2.5e-3F;
-	MotorParam_1.Ld_inv = 1.0F / MotorParam_1.Ld;	
-	MotorParam_1.Lq_inv = 1.0F / MotorParam_1.Lq;
+	MotorParam_1.Ld_inv 	= 1.0F / MotorParam_1.Ld;	
+	MotorParam_1.Lq_inv 	= 1.0F / MotorParam_1.Lq;
 	MotorParam_1.iMax		= 11.5F;
-	MotorParam_1.kiw		= 4.5e-6F;//7.5e-6F;
-	MotorParam_1.kpw		= 0.008F;//1.6e-2F;
-	MotorParam_1.kid		= 0.5F;
-	MotorParam_1.kpd		= 15.F;
+	MotorParam_1.kiw		= 7.5e-6F;//7.5e-6F;
+	MotorParam_1.kpw		= 0.01F;//1.6e-2F;
+	MotorParam_1.kid		= 0.21F;
+	MotorParam_1.kpd		= 3.75F;
 	
 	// Параметры фильтра напряжения
 	uFiltrParm.index 	= 0;
@@ -54,8 +54,9 @@ void initVariables(){
 	uFiltrParm.sum   	= 0.F;
 	
 	// Параметры фильтра скорости
+#define WFILTRLEN 		512	
 	wFiltrParm.index  	= 0;
-	wFiltrParm.length 	= 128;
+	wFiltrParm.length 	= WFILTRLEN;
 	wFiltrParm.sum    	= 0.F;
 	
 	// Переменные для запуска мотора
@@ -78,10 +79,11 @@ void initVariables(){
 	MotorCurrents.iqZad = 0.6F;
 	
 	// ПИ Регуляторы
-	kiStart = 2.5F; 
-	kpStart = 10.F; 
+	kiStart = 0.21F; 
+	kpStart = 3.75F; 
 	
-	initPI(&uStartPI, kpStart, kiStart, 1.F, 17.F, 0.F, 0.F);
+	initPI(&uStartPI, kpStart, kiStart, 1.F, 50.F, -50.F, 0.F);
+	/*									      17     0		*/
 	
 }
 
@@ -91,15 +93,15 @@ void reinitVariables(){
 	
 	// Параметры фильтра скорости
 	wFiltrParm.index  	= 0;
-	wFiltrParm.length 	= 128;
+	wFiltrParm.length 	= WFILTRLEN;
 	wFiltrParm.sum    	= 0.F;
 	
 	// Переменные для запуска мотора
 	//StartVar.iMax 	= MotorParam->iMax;
 	
 	// Переменные для MRAS
-	MRASVar.kim 	= 1250.F;
-	MRASVar.kpm 	= 0.05F;
+	MRASVar.kim 	= 150000.F;
+	MRASVar.kpm 	= 2.05F;
 	MRASVar.tetm 	= 0;
 	MRASVar.wr	 	= 0;
 	MRASVar.sinm 	= 0;
@@ -112,8 +114,8 @@ void reinitVariables(){
 	MotorCurrents.iqZad = 0.6F;
 	
 	initPIclamp		(&wPI, 		MotorParam->kpw, 	MotorParam->kiw, 	1.F, 	StartVar.iMax,  	-1.F, 	0.F);
-	initPI			(&idPI, 	MotorParam->kpd, 	MotorParam->kid, 	1.F, 	20.F, 				-20.F, 	0.F);
-	initPI			(&iqPI, 	MotorParam->kpd, 	MotorParam->kid,	1.F, 	20.F, 				-20.F, 	0.F);	
+	initPI			(&idPI, 	MotorParam->kpd, 	MotorParam->kid, 	1.F, 	50.F, 				-50.F, 	0.F);
+	initPI			(&iqPI, 	MotorParam->kpd, 	MotorParam->kid,	1.F, 	50.F, 				-50.F, 	0.F);	
 	
 	wTarg = 500.F;//1332.F;  // 212 Hz
 	
@@ -136,6 +138,7 @@ void runFullyControlled(void){
 	
 	temp = MRASVar.wr;
 	wsr = sredN_f(temp, &wFiltrParm);
+	//DAC->DHR12R1 = MRASVar.tetm * 600;
 					
 	//PI controller for speed calculation
 	wPI.qInMeas = wsr;
@@ -223,7 +226,21 @@ void startMotor(){
 	static int startingCounter = 0;
 
 	PWM_ON();
-			
+//#define START_TEST
+	
+#ifdef START_TEST  //TEST of current sense for this configuration 
+	if (startingCounter++ > 2500){
+		StartVar.i = 2.F;
+		if (startingCounter >5000){
+			startingCounter = 0;
+		}
+	
+	}else{
+		StartVar.i = 12;
+	}
+#else	
+
+		
 	if(StartVar.i < StartVar.iMax){
 		StartVar.i += StartVar.didt * (float)PRPWM;
 	}else {
@@ -247,7 +264,8 @@ void startMotor(){
 		}
 	}
 			
-			
+#endif	/*	END of test	*/
+
 	uStartPI.qOutMax =  (MotorVoltage.udc_izm - 3)*0.5747F;
 	uStartPI.qInRef  =  StartVar.i;
 	uStartPI.qInMeas =  1.F/quickSqrt(MotorCurrents.iAlfa * MotorCurrents.iAlfa + MotorCurrents.iBeta * MotorCurrents.iBeta);
@@ -297,7 +315,7 @@ void stopMotor(){
 	StartVar.iMax 		= 5.F;
 	StartVar.u 			= 0;
 	
-	initPI(&uStartPI, kpStart, kiStart, 1.F, 17.F, 0.F, 0.F);
+	//initPI(&uStartPI, kpStart, kiStart, 1.F, 17.F, 0.F, 0.F);
 	
 
 }

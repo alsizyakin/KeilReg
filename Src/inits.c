@@ -167,18 +167,30 @@ void init_comp(void){
 		COMP7->CSR |= COMP_CSR_COMPxINSEL_2;	// Inverting input: PA4 or DAC1 
 		COMP7->CSR &= ~COMP_CSR_COMPxNONINSEL;// Non inverting input: PA0
 	
-	  COMP7->CSR |= COMP_CSR_COMPxPOL; 			// Output is inverted
+		COMP7->CSR |= COMP_CSR_COMPxPOL; 			// Output is inverted
     
 		/***** DAC 1  for COMP 7 *****/
 		RCC->APB1ENR |= RCC_APB1ENR_DAC1EN;
-    DAC->CR &= ~ DAC_CR_TEN1; 						//DAC channel 1 trigger disabled
+		DAC->CR &= ~ DAC_CR_TEN1; 						//DAC channel 1 trigger disabled
 	
-    DAC->CR 	|= DAC_CR_EN1;					// DAC enable
+		DAC->CR 	|= DAC_CR_EN1;					// DAC enable
 		COMP7->CSR |= COMP_CSR_COMPxEN;			// COMP enable
 	
 		DAC->DHR12R1 = TEMP_MAX;
   
 }
+
+void init_dac(void){
+	SET_BIT(GPIOA->MODER, 	GPIO_MODER_MODER4);  //Analog Mode  PA4
+	/***** DAC 1  PA4 *****/
+	RCC->APB1ENR |= RCC_APB1ENR_DAC1EN;
+		
+	DAC->CR 	|= DAC_CR_EN1;					// DAC enable
+		
+	
+  
+}
+
 
 void init_opamp(void){
 	

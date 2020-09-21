@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\STM32F303CBT_Prj.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\STM32F303CBT_Prj.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Tue Sep 15 13:15:20 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon Sep 21 16:52:51 2020
 <BR><P>
 <H3>Maximum Stack Usage =         88 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -490,22 +490,22 @@ Global Symbols
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;runFullyControlled
 </UL>
 
-<P><STRONG><a name="[1e]"></a>ADC1_2_IRQHandler</STRONG> (Thumb, 110 bytes, Stack size 8 bytes, interrupts.o(i.ADC1_2_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ADC1_2_IRQHandler &rArr; stopMotor
+<P><STRONG><a name="[1e]"></a>ADC1_2_IRQHandler</STRONG> (Thumb, 142 bytes, Stack size 8 bytes, interrupts.o(i.ADC1_2_IRQHandler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = ADC1_2_IRQHandler
 </UL>
 <BR>[Calls]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopMotor
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f303xc.o(RESET)
 </UL>
-<P><STRONG><a name="[3b]"></a>ADC3_IRQHandler</STRONG> (Thumb, 52 bytes, Stack size 8 bytes, interrupts.o(i.ADC3_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ADC3_IRQHandler &rArr; stopMotor
+<P><STRONG><a name="[3b]"></a>ADC3_IRQHandler</STRONG> (Thumb, 68 bytes, Stack size 8 bytes, interrupts.o(i.ADC3_IRQHandler))
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = ADC3_IRQHandler
 </UL>
 <BR>[Calls]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopMotor
 </UL>
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f303xc.o(RESET)
 </UL>
 <P><STRONG><a name="[46]"></a>ADC4_IRQHandler</STRONG> (Thumb, 56 bytes, Stack size 8 bytes, interrupts.o(i.ADC4_IRQHandler))
-<BR><BR>[Stack]<UL><LI>Max Depth = 16<LI>Call Chain = ADC4_IRQHandler &rArr; stopMotor
+<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = ADC4_IRQHandler
 </UL>
 <BR>[Calls]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopMotor
 </UL>
@@ -583,7 +583,7 @@ Global Symbols
 <P><STRONG><a name="[4e]"></a>SystemInit</STRONG> (Thumb, 104 bytes, Stack size 0 bytes, system_stm32f3xx.o(i.SystemInit))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f303xc.o(.text)
 </UL>
-<P><STRONG><a name="[25]"></a>TIM1_UP_TIM16_IRQHandler</STRONG> (Thumb, 70 bytes, Stack size 0 bytes, interrupts.o(i.TIM1_UP_TIM16_IRQHandler))
+<P><STRONG><a name="[25]"></a>TIM1_UP_TIM16_IRQHandler</STRONG> (Thumb, 84 bytes, Stack size 0 bytes, interrupts.o(i.TIM1_UP_TIM16_IRQHandler))
 <BR>[Address Reference Count : 1]<UL><LI> startup_stm32f303xc.o(RESET)
 </UL>
 <P><STRONG><a name="[7]"></a>UsageFault_Handler</STRONG> (Thumb, 4 bytes, Stack size 0 bytes, stm32f3xx_it.o(i.UsageFault_Handler))
@@ -629,7 +629,6 @@ Global Symbols
 
 <P><STRONG><a name="[6e]"></a>initPI</STRONG> (Thumb, 34 bytes, Stack size 0 bytes, pi.o(i.initPI))
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reinitVariables
-<LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopMotor
 <LI><a href="#[6d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initVariables
 </UL>
 
@@ -637,7 +636,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reinitVariables
 </UL>
 
-<P><STRONG><a name="[6d]"></a>initVariables</STRONG> (Thumb, 362 bytes, Stack size 8 bytes, motorcontrol.o(i.initVariables))
+<P><STRONG><a name="[6d]"></a>initVariables</STRONG> (Thumb, 368 bytes, Stack size 8 bytes, motorcontrol.o(i.initVariables))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = initVariables
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPI
@@ -689,7 +688,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[5b]"></a>main</STRONG> (Thumb, 336 bytes, Stack size 0 bytes, main.o(i.main))
+<P><STRONG><a name="[5b]"></a>main</STRONG> (Thumb, 374 bytes, Stack size 0 bytes, main.o(i.main))
 <BR><BR>[Stack]<UL><LI>Max Depth = 88<LI>Call Chain = main &rArr; runningState &rArr; runFullyControlled &rArr; SVPWM_f
 </UL>
 <BR>[Calls]<UL><LI><a href="#[64]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;stopMotor
@@ -719,7 +718,7 @@ Global Symbols
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;runFullyControlled
 </UL>
 
-<P><STRONG><a name="[7d]"></a>reinitVariables</STRONG> (Thumb, 266 bytes, Stack size 8 bytes, motorcontrol.o(i.reinitVariables))
+<P><STRONG><a name="[7d]"></a>reinitVariables</STRONG> (Thumb, 270 bytes, Stack size 8 bytes, motorcontrol.o(i.reinitVariables))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = reinitVariables
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPIclamp
@@ -758,7 +757,7 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[6c]"></a>sredN_f</STRONG> (Thumb, 80 bytes, Stack size 0 bytes, dfilt.o(i.sredN_f))
+<P><STRONG><a name="[6c]"></a>sredN_f</STRONG> (Thumb, 96 bytes, Stack size 0 bytes, dfilt.o(i.sredN_f))
 <BR><BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;runFullyControlled
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getUdc
 </UL>
@@ -790,18 +789,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[64]"></a>stopMotor</STRONG> (Thumb, 152 bytes, Stack size 8 bytes, motorcontrol.o(i.stopMotor))
-<BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = stopMotor
-</UL>
-<BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPI
-</UL>
-<BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC4_IRQHandler
+<P><STRONG><a name="[64]"></a>stopMotor</STRONG> (Thumb, 116 bytes, Stack size 0 bytes, motorcontrol.o(i.stopMotor))
+<BR><BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC4_IRQHandler
 <LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC3_IRQHandler
 <LI><a href="#[1e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1_2_IRQHandler
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[7a]"></a>stoppedState</STRONG> (Thumb, 148 bytes, Stack size 8 bytes, main.o(i.stoppedState))
+<P><STRONG><a name="[7a]"></a>stoppedState</STRONG> (Thumb, 196 bytes, Stack size 8 bytes, main.o(i.stoppedState))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = stoppedState &rArr; getUdc
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;measureCurrentBase

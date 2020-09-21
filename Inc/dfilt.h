@@ -1,7 +1,7 @@
 #ifndef DFILT_H
 #define DFILT_H
 #include <stdint.h>
-#define MAX_SREDN_FILTER_LENGTH 128
+#define MAX_SREDN_FILTER_LENGTH 512
 
 // Структура значений параметров фильтра
 typedef struct {

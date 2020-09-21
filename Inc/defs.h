@@ -25,14 +25,14 @@
 //#define AWD_CUR_LT	0x0606	// Analog watchdog lower threshold	5A
 //#define AWD_CUR_HT	0x0BF4 	// 10A
 //#define AWD_CUR_LT	0x040C 	// 10A
-#define AWD_CUR_HT	0x0DAC//0x0CC6//0x0FA0 	// 15A
-#define AWD_CUR_LT	0x00FA//0x0160//0x0212 	// 15A
+#define AWD_CUR_HT	0x0DDE//0x0CC6//0x0FA0 	// 15A
+#define AWD_CUR_LT	0x0050//0x0160//0x0212 	// 15A
 
 #define AWD_VOLT_HT	0x0FDC	// Analog watchdog higher threshold	330V
  
 #define TEMP_MAX 				2746 // 90 deg
 #define TEMP_MIN 				3659 // 50 deg
-#define CHECK_TEMP()		READ_BIT(COMP7->CSR, COMP_CSR_COMPxOUT)
+#define CHECK_TEMP()			READ_BIT(COMP7->CSR, COMP_CSR_COMPxOUT)
 
 #define STOP_VOLTS 				150.F
 #define START_VOLTS    		280.F

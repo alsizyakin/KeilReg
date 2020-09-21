@@ -28,6 +28,8 @@ extern TFlags Flags;
 extern TMotorCurrents MotorCurrents; 
 extern TMotorVoltage MotorVoltage; 
 extern TMRASVar MRASVar;
+
+int fltCnt = 0;
 /**
   * @brief  Main program
   * @param  None
@@ -48,6 +50,7 @@ int main(void){
 	init_ports();
 	init_opamp();
 	init_comp();
+	//init_dac();
 	init_adc();
 	init_awd();
 	init_dma(&MasADC);
@@ -103,9 +106,14 @@ int main(void){
 				break;
 									
 			case STATE_FAULT:
+								
+				
 				LED_ON(LED_ALL);
 				stopMotor();
-				//Flags.CurrentState = STATE_STOPPED;
+				if (fltCnt++ > 50000){
+					fltCnt = 0;
+				    Flags.CurrentState = STATE_STOPPED;
+				}
 				break;
 					
 			case STATE_STOPPING:
@@ -132,6 +140,12 @@ void stoppedState(void){
 		LED_ON(BUTTON_2);
 		Flags.OverTemp = 1;
 		Flags.CurrentState = STATE_FAULT;
+		DAC->DHR12R1 = TEMP_MIN;
+	}
+	
+	if(!CHECK_TEMP() && Flags.OverTemp){
+		Flags.OverTemp = 0;
+		DAC->DHR12R1 = TEMP_MAX;
 	}
 	
 	if ((MotorVoltage.udc_izm > START_VOLTS) && (Flags.OverTemp == 0)){
