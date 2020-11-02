@@ -19,7 +19,7 @@
 //#define CURRENT_CONV_COEF 		0.00535 	// R = 22 kOm 
 //#define CURRENT_CONV_COEF 		0.00912 	// R = 13 kOm
 #define CURRENT_CONV_COEF 		0.00988 	// R = 12 kOm
-#define VOLTAGE_CONV_COEF 		0.08138F
+#define VOLTAGE_CONV_COEF 		0.09961//old value at 02.112020 was 0.08138F
 
 //#define AWD_CUR_HT	0x09FA 	// Analog watchdog higher threshold	5A
 //#define AWD_CUR_LT	0x0606	// Analog watchdog lower threshold	5A
@@ -34,8 +34,9 @@
 #define TEMP_MIN 				3659 // 50 deg
 #define CHECK_TEMP()			READ_BIT(COMP7->CSR, COMP_CSR_COMPxOUT)
 
-#define STOP_VOLTS 				150.F
-#define START_VOLTS    		280.F
+#define STOP_VOLTS 				150.F // minimum voltage to get accessible speed
+#define START_VOLTS    			280.F // 
+#define	MAX_VOLTS				360.F // standart 230V + 10% * 1.414 as amplitude
 
 #ifdef USE_INDICATION_BOARD 
 		// Buttons

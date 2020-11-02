@@ -130,8 +130,15 @@ int main(void){
 }
 
 void stoppedState(void){
-	static uint16_t nb_delay = 0;
+#define SLOWVOLTDETECT // turn on the system when DC-voltage raises slowly because of capacitors are charged
+
 	
+	static uint16_t nb_delay = 0;
+#ifdef SLOWVOLTDETECT 
+	static float old_volts = 0;
+	float dudcdt = 100.F;  //DC-link voltage increasing rate
+	static int volt_counter = 0;
+#endif
 	measureCurrentBase(&MasADC, &MotorCurrents);
 	getUdc(&MasADC, &MotorVoltage);
 	
@@ -148,6 +155,8 @@ void stoppedState(void){
 		DAC->DHR12R1 = TEMP_MAX;
 	}
 	
+	
+#ifndef SLOWVOLTDETECT	
 	if ((MotorVoltage.udc_izm > START_VOLTS) && (Flags.OverTemp == 0)){
 		if((nb_delay++) >= 10000){
 			nb_delay = 0;
@@ -155,6 +164,32 @@ void stoppedState(void){
 			Flags.CurrentState = STATE_STARTING;
 		}
 	}
+#else	
+	
+	if (volt_counter++ > 500){
+		dudcdt = MotorVoltage.udc_izm - old_volts;
+		if ((Flags.OverTemp == 0) && (dudcdt < 0.025F) && (MotorVoltage.udc_izm > STOP_VOLTS)) {
+			if((nb_delay++)>= 5){
+				nb_delay = 0;
+			
+				LED_ON(BUTTON_2);
+			
+				NTC_RELAY_ON();
+				Flags.CurrentState = STATE_STARTING;
+			}
+		} else {
+			nb_delay = 0;
+			LED_OFF(BUTTON_2);
+			if (MotorVoltage.udc_izm < STOP_VOLTS){
+				NTC_RELAY_OFF();
+			}
+		}
+		old_volts = MotorVoltage.udc_izm;
+		volt_counter = 0;
+	}
+	
+#endif	
+	
 }
 
 void startingState(void){

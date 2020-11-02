@@ -224,7 +224,7 @@ void startMotor(){
 	
 	float angleSVPWM;
 	static int startingCounter = 0;
-
+	
 	PWM_ON();
 //#define START_TEST
 	
