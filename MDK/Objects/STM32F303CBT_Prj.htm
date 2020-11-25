@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\STM32F303CBT_Prj.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\STM32F303CBT_Prj.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Mon Nov 02 16:33:14 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed Nov 25 19:06:48 2020
 <BR><P>
 <H3>Maximum Stack Usage =         88 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -636,7 +636,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reinitVariables
 </UL>
 
-<P><STRONG><a name="[6d]"></a>initVariables</STRONG> (Thumb, 368 bytes, Stack size 8 bytes, motorcontrol.o(i.initVariables))
+<P><STRONG><a name="[6d]"></a>initVariables</STRONG> (Thumb, 394 bytes, Stack size 8 bytes, motorcontrol.o(i.initVariables))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = initVariables
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPI
@@ -758,16 +758,18 @@ Global Symbols
 </UL>
 
 <P><STRONG><a name="[6c]"></a>sredN_f</STRONG> (Thumb, 96 bytes, Stack size 0 bytes, dfilt.o(i.sredN_f))
-<BR><BR>[Called By]<UL><LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;runFullyControlled
+<BR><BR>[Called By]<UL><LI><a href="#[89]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;startMotor
+<LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;runFullyControlled
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getUdc
 </UL>
 
-<P><STRONG><a name="[89]"></a>startMotor</STRONG> (Thumb, 504 bytes, Stack size 16 bytes, motorcontrol.o(i.startMotor))
+<P><STRONG><a name="[89]"></a>startMotor</STRONG> (Thumb, 564 bytes, Stack size 16 bytes, motorcontrol.o(i.startMotor))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = startMotor &rArr; SVPWM_f
 </UL>
 <BR>[Calls]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;quickSqrt
 <LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reinitVariables
 <LI><a href="#[82]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;calculatePI
+<LI><a href="#[6c]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;sredN_f
 <LI><a href="#[66]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_sin_f32
 <LI><a href="#[6a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;arm_cos_f32
 <LI><a href="#[8a]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;transformFwdParkVoltage
@@ -796,8 +798,8 @@ Global Symbols
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[7a]"></a>stoppedState</STRONG> (Thumb, 328 bytes, Stack size 16 bytes, main.o(i.stoppedState))
-<BR><BR>[Stack]<UL><LI>Max Depth = 40<LI>Call Chain = stoppedState &rArr; getUdc
+<P><STRONG><a name="[7a]"></a>stoppedState</STRONG> (Thumb, 196 bytes, Stack size 8 bytes, main.o(i.stoppedState))
+<BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = stoppedState &rArr; getUdc
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;measureCurrentBase
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getUdc

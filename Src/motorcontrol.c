@@ -15,6 +15,7 @@ TMotorVoltage MotorVoltage;
 
 TFiltrParm  wFiltrParm;
 extern TFiltrParm 	uFiltrParm;
+TFiltrParm  rFiltrParm;
 
 TMotorParam MotorParam_1, MotorParam_2; 
 TMotorParam *MotorParam;
@@ -30,6 +31,9 @@ float 		PulseTimes[3]={0, 0, 0};
 // ПИ регуляторы
 TPIParm uStartPI, wPI, idPI, iqPI;
 float kiStart = 5.F, kpStart = 50.F, kiw = 7.5e-6, kpw = 1.6e-2, kiD = 5.F, kpD = 50.F;
+
+float detected_R;
+
 
 void initVariables(){
 	
@@ -59,12 +63,19 @@ void initVariables(){
 	wFiltrParm.length 	= WFILTRLEN;
 	wFiltrParm.sum    	= 0.F;
 	
+	// Параметры фильтра R
+	rFiltrParm.index 	= 0;
+	rFiltrParm.length 	= 128;
+	rFiltrParm.sum   	= 0.F;
+	
+	
+	
 	// Переменные для запуска мотора
 	StartVar.i 			= 0;
 	StartVar.id			= 0;
 	StartVar.iq			= 0;
 	StartVar.didt 		= 100;
-	StartVar.eps 		= 50;
+	StartVar.eps 		= 50;//50
 	StartVar.w 			= 0;
 	StartVar.wMax 		= 150;
 	StartVar.angle 		= 0;
@@ -219,13 +230,17 @@ void runFullyControlled(void){
 	
 		 	
 }
-
+int res_detect_counter = 0;
+int res_flag = 0;
 void startMotor(){
 	
 	float angleSVPWM;
+	float calc_R;
 	static int startingCounter = 0;
 	
+	
 	PWM_ON();
+	
 //#define START_TEST
 	
 #ifdef START_TEST  //TEST of current sense for this configuration 
@@ -244,23 +259,31 @@ void startMotor(){
 	if(StartVar.i < StartVar.iMax){
 		StartVar.i += StartVar.didt * (float)PRPWM;
 	}else {
+		StartVar.i = StartVar.iMax;
 		if(Flags.MotorDetection == 0){
-					reinitVariables();
-					Flags.MotorDetection = 1;
-		}
-		else{
-				StartVar.w 	+= 	StartVar.eps * (float)PRPWM;
-				StartVar.angle	+= 	StartVar.w * (float)PRPWM;
-				if(StartVar.angle > M_2PI)
-					StartVar.angle -= M_2PI; 
+			reinitVariables();
+			Flags.MotorDetection = 1;
+			res_detect_counter = 0;
+		}else if(res_detect_counter < 500000) {
+			res_detect_counter++;
+			calc_R = uStartPI.qOut / uStartPI.qInMeas;
+			detected_R = sredN_f(calc_R, &rFiltrParm);
+		}else{
+			StartVar.w 	+= 	StartVar.eps * (float)PRPWM;
+			StartVar.angle	+= 	StartVar.w * (float)PRPWM;
+			if(StartVar.angle > M_2PI){
+				StartVar.angle -= M_2PI; 
+			}
 		}
 	}
-			
+	
+	//equation for leaving STARTING_STATE
 	if (StartVar.w > StartVar.wMax){
 		StartVar.w = StartVar.wMax;
 		if (startingCounter++ > 5){
-			Flags.CurrentState = STATE_RUNNING;
+			//Flags.CurrentState = STATE_RUNNING;
 			startingCounter = 0;
+			res_flag = 1;
 		}
 	}
 			
@@ -308,7 +331,7 @@ void stopMotor(){
 	StartVar.id			= 0;
 	StartVar.iq			= 0;
 	StartVar.didt 		= 100;
-	StartVar.eps 		= 50;
+	StartVar.eps 		= 50;//50
 	StartVar.w 			= 0;
 	StartVar.wMax 		= 150;
 	StartVar.angle 		= 0;

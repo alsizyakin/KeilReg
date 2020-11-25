@@ -34,8 +34,8 @@
 #define TEMP_MIN 				3659 // 50 deg
 #define CHECK_TEMP()			READ_BIT(COMP7->CSR, COMP_CSR_COMPxOUT)
 
-#define STOP_VOLTS 				150.F // minimum voltage to get accessible speed
-#define START_VOLTS    			280.F // 
+#define STOP_VOLTS 				15.F // minimum voltage to get accessible speed
+#define START_VOLTS    			20.F // 
 #define	MAX_VOLTS				360.F // standart 230V + 10% * 1.414 as amplitude
 
 #ifdef USE_INDICATION_BOARD 
