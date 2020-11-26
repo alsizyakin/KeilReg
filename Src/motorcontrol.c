@@ -33,7 +33,8 @@ TPIParm uStartPI, wPI, idPI, iqPI;
 float kiStart = 5.F, kpStart = 50.F, kiw = 7.5e-6, kpw = 1.6e-2, kiD = 5.F, kpD = 50.F;
 
 float detected_R;
-
+int res_detect_counter = 0;
+float calc_Ra, calc_Rb, calc_Rc, calc_R;
 
 void initVariables(){
 	
@@ -96,6 +97,13 @@ void initVariables(){
 	initPI(&uStartPI, kpStart, kiStart, 1.F, 50.F, -50.F, 0.F);
 	/*									      17     0		*/
 	
+	
+	
+	
+	PWMComp.dt = DTF;
+	PWMComp.uvd = 1.7F;
+	PWMComp.uvt = 1.5F;
+	
 }
 
 void reinitVariables(){
@@ -127,11 +135,11 @@ void reinitVariables(){
 	initPIclamp		(&wPI, 		MotorParam->kpw, 	MotorParam->kiw, 	1.F, 	StartVar.iMax,  	-1.F, 	0.F);
 	initPI			(&idPI, 	MotorParam->kpd, 	MotorParam->kid, 	1.F, 	50.F, 				-50.F, 	0.F);
 	initPI			(&iqPI, 	MotorParam->kpd, 	MotorParam->kid,	1.F, 	50.F, 				-50.F, 	0.F);	
+	initPI			(&uStartPI, kpStart, kiStart, 1.F, 50.F, -50.F, 0.F);
 	
 	wTarg = 500.F;//1332.F;  // 212 Hz
 	
 }
-
 
 
 void runFullyControlled(void){
@@ -230,12 +238,14 @@ void runFullyControlled(void){
 	
 		 	
 }
-int res_detect_counter = 0;
-int res_flag = 0;
+
+
+
+
 void startMotor(){
 	
 	float angleSVPWM;
-	float calc_R;
+	//static  //return detected_R, calc_R s here
 	static int startingCounter = 0;
 	
 	
@@ -264,13 +274,25 @@ void startMotor(){
 			reinitVariables();
 			Flags.MotorDetection = 1;
 			res_detect_counter = 0;
-		}else if(res_detect_counter < 500000) {
+		}else if(res_detect_counter < NMEAS) {
 			res_detect_counter++;
 			calc_R = uStartPI.qOut / uStartPI.qInMeas;
-			detected_R = sredN_f(calc_R, &rFiltrParm);
+			calc_Ra = sredN_f(calc_R, &rFiltrParm);
+		}else if(res_detect_counter < 2 * NMEAS){
+			StartVar.angle = M_2PI / 3.F;
+			res_detect_counter++;
+			calc_R = uStartPI.qOut / uStartPI.qInMeas;
+			calc_Rb = sredN_f(calc_R, &rFiltrParm);
+		}else if(res_detect_counter < 3 * NMEAS){
+			StartVar.angle = M_2PI / 1.5F;
+			res_detect_counter++;
+			calc_R = uStartPI.qOut / uStartPI.qInMeas;
+			calc_Rc = sredN_f(calc_R, &rFiltrParm);	
 		}else{
+			detected_R = (calc_Ra + calc_Rb + calc_Rc)/3.F;
 			StartVar.w 	+= 	StartVar.eps * (float)PRPWM;
 			StartVar.angle	+= 	StartVar.w * (float)PRPWM;
+			Flags.MRASEnable = 1;
 			if(StartVar.angle > M_2PI){
 				StartVar.angle -= M_2PI; 
 			}
@@ -281,9 +303,9 @@ void startMotor(){
 	if (StartVar.w > StartVar.wMax){
 		StartVar.w = StartVar.wMax;
 		if (startingCounter++ > 5){
-			//Flags.CurrentState = STATE_RUNNING;
+			Flags.CurrentState = STATE_RUNNING;
 			startingCounter = 0;
-			res_flag = 1;
+			//res_flag = 1;
 		}
 	}
 			
@@ -309,13 +331,13 @@ void startMotor(){
 			
 	MotorVoltage.uAlfa = MotorVoltage.uref * arm_cos_f32(StartVar.angle);
 	MotorVoltage.uBeta = MotorVoltage.uref * arm_sin_f32(StartVar.angle);
-			
-	calculateMRAS( &MotorCurrents, &MotorVoltage, MotorParam, &MRASVar, (float)PRPWM);
-			
-	transformFwdParkVoltage(&MotorVoltage, &MRASVar);
-			
-	StartVar.iq = MotorCurrents.idr;
-	StartVar.id = MotorCurrents.iqr;
+	
+	if(Flags.MRASEnable){		
+		calculateMRAS( &MotorCurrents, &MotorVoltage, MotorParam, &MRASVar, (float)PRPWM);
+		transformFwdParkVoltage(&MotorVoltage, &MRASVar);
+		StartVar.iq = MotorCurrents.idr;
+		StartVar.id = MotorCurrents.iqr;
+	}
   
 }
 
@@ -338,8 +360,13 @@ void stopMotor(){
 	StartVar.iMax 		= 5.F;
 	StartVar.u 			= 0;
 	
-	//initPI(&uStartPI, kpStart, kiStart, 1.F, 17.F, 0.F, 0.F);
 	
+	WRITE_REG(TIM1->CCR1, Timer1Period/2);
+	WRITE_REG(TIM1->CCR2, Timer1Period/2);
+	WRITE_REG(TIM1->CCR3, Timer1Period/2);
+	
+	//initPI(&uStartPI, kpStart, kiStart, 1.F, 17.F, 0.F, 0.F);
+	Flags.MRASEnable = 0;
 
 }
 

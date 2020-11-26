@@ -159,9 +159,12 @@ void stoppedState(void){
 #ifndef SLOWVOLTDETECT	
 	if ((MotorVoltage.udc_izm > START_VOLTS) && (Flags.OverTemp == 0)){
 		if((nb_delay++) >= 10000){
-			nb_delay = 0;
+			
 			NTC_RELAY_ON();
-			Flags.CurrentState = STATE_STARTING;
+			if (nb_delay > 15000){
+				Flags.CurrentState = STATE_STARTING;
+				nb_delay = 0;
+			}
 		}
 	}
 #else	

@@ -31,6 +31,7 @@ typedef struct {
 	unsigned CurrentMotor		: 1;
 	unsigned MotorDetection		: 1;
 	unsigned LowCurrent			: 1;
+	unsigned MRASEnable			: 1;
 } TFlags;
 
 

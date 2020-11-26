@@ -3,7 +3,7 @@
 <title>Static Call Graph - [.\Objects\STM32F303CBT_Prj.axf]</title></head>
 <body><HR>
 <H1>Static Call Graph for image .\Objects\STM32F303CBT_Prj.axf</H1><HR>
-<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Wed Nov 25 19:06:48 2020
+<BR><P>#&#060CALLGRAPH&#062# ARM Linker, 5060750: Last Updated: Thu Nov 26 16:49:26 2020
 <BR><P>
 <H3>Maximum Stack Usage =         88 bytes + Unknown(Functions without stacksize, Cycles, Untraceable Function Pointers)</H3><H3>
 Call chain for Maximum Stack Depth:</H3>
@@ -636,7 +636,7 @@ Global Symbols
 <BR><BR>[Called By]<UL><LI><a href="#[7d]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;reinitVariables
 </UL>
 
-<P><STRONG><a name="[6d]"></a>initVariables</STRONG> (Thumb, 394 bytes, Stack size 8 bytes, motorcontrol.o(i.initVariables))
+<P><STRONG><a name="[6d]"></a>initVariables</STRONG> (Thumb, 420 bytes, Stack size 8 bytes, motorcontrol.o(i.initVariables))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = initVariables
 </UL>
 <BR>[Calls]<UL><LI><a href="#[6e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPI
@@ -718,7 +718,7 @@ Global Symbols
 <LI><a href="#[7f]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;runFullyControlled
 </UL>
 
-<P><STRONG><a name="[7d]"></a>reinitVariables</STRONG> (Thumb, 270 bytes, Stack size 8 bytes, motorcontrol.o(i.reinitVariables))
+<P><STRONG><a name="[7d]"></a>reinitVariables</STRONG> (Thumb, 304 bytes, Stack size 8 bytes, motorcontrol.o(i.reinitVariables))
 <BR><BR>[Stack]<UL><LI>Max Depth = 8<LI>Call Chain = reinitVariables
 </UL>
 <BR>[Calls]<UL><LI><a href="#[7e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;initPIclamp
@@ -763,7 +763,7 @@ Global Symbols
 <LI><a href="#[6b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;getUdc
 </UL>
 
-<P><STRONG><a name="[89]"></a>startMotor</STRONG> (Thumb, 564 bytes, Stack size 16 bytes, motorcontrol.o(i.startMotor))
+<P><STRONG><a name="[89]"></a>startMotor</STRONG> (Thumb, 780 bytes, Stack size 16 bytes, motorcontrol.o(i.startMotor))
 <BR><BR>[Stack]<UL><LI>Max Depth = 64<LI>Call Chain = startMotor &rArr; SVPWM_f
 </UL>
 <BR>[Calls]<UL><LI><a href="#[83]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;quickSqrt
@@ -791,14 +791,14 @@ Global Symbols
 <BR>[Called By]<UL><LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[64]"></a>stopMotor</STRONG> (Thumb, 116 bytes, Stack size 0 bytes, motorcontrol.o(i.stopMotor))
+<P><STRONG><a name="[64]"></a>stopMotor</STRONG> (Thumb, 208 bytes, Stack size 0 bytes, motorcontrol.o(i.stopMotor))
 <BR><BR>[Called By]<UL><LI><a href="#[46]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC4_IRQHandler
 <LI><a href="#[3b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC3_IRQHandler
 <LI><a href="#[1e]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;ADC1_2_IRQHandler
 <LI><a href="#[5b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;main
 </UL>
 
-<P><STRONG><a name="[7a]"></a>stoppedState</STRONG> (Thumb, 196 bytes, Stack size 8 bytes, main.o(i.stoppedState))
+<P><STRONG><a name="[7a]"></a>stoppedState</STRONG> (Thumb, 208 bytes, Stack size 8 bytes, main.o(i.stoppedState))
 <BR><BR>[Stack]<UL><LI>Max Depth = 32<LI>Call Chain = stoppedState &rArr; getUdc
 </UL>
 <BR>[Calls]<UL><LI><a href="#[8b]">&gt;&gt;</a>&nbsp;&nbsp;&nbsp;measureCurrentBase
