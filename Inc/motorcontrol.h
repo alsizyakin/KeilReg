@@ -46,6 +46,7 @@ void runFullyControlled(void);
 void startMotor(void);
 
 void stopMotor(void);
+int calculateResistance(void); 
 
 
 #endif

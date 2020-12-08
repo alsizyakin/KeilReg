@@ -38,7 +38,7 @@
 #define START_VOLTS    			20.F // 
 #define	MAX_VOLTS				360.F // standart 230V + 10% * 1.414 as amplitude
 
-#define NMEAS 					12500  // period for measuring os phase resistance in 			
+#define NMEAS 					2500  // period for measuring os phase resistance in PWM tacts	
 
 #ifdef USE_INDICATION_BOARD 
 		// Buttons

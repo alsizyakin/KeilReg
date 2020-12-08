@@ -131,7 +131,6 @@ int main(void){
 
 void stoppedState(void){
 //#define SLOWVOLTDETECT // turn on the system when DC-voltage raises slowly because of capacitors are charged
-
 	
 	static uint16_t nb_delay = 0;
 #ifdef SLOWVOLTDETECT 

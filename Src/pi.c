@@ -11,7 +11,7 @@ InitPI - function to init the PI Controller
     min 	//PI Output minimum limit
 	out		//PI initial output
 ************************************************************************/
-void initPI(TPIParm *pParm,float kp,float ki,float kc,float max,float min,float out)
+void initPI(TPIParm *pParm, float kp, float ki, float kc, float max, float min, float out)
 {
     pParm->qdSum = 0;
     pParm->qKp = kp;
@@ -61,7 +61,7 @@ void calculatePI( TPIParm *pParm)  {
     //U = Ki * Err
     U = currentError * pParm->qKi;
 
-    //compute the difference between the limited and not limites output
+    //compute the difference between the limited and not limited output
     //currentError is used as a temporary variable
     currentError = outTemp - pParm->qOut;
 
@@ -75,7 +75,7 @@ void calculatePI( TPIParm *pParm)  {
 
 // PI-controller with clamping saturation
 
-void initPIclamp(TPIParm *pParm,float kp,float ki,float kc,float max,float min,float out)
+void initPIclamp(TPIParm *pParm, float kp, float ki, float kc, float max, float min, float out)
 {
     pParm->qdSum = 0;
     pParm->qKp = kp;

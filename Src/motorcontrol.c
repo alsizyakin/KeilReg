@@ -75,7 +75,7 @@ void initVariables(){
 	StartVar.i 			= 0;
 	StartVar.id			= 0;
 	StartVar.iq			= 0;
-	StartVar.didt 		= 100;
+	StartVar.didt 		= 32.F;
 	StartVar.eps 		= 50;//50
 	StartVar.w 			= 0;
 	StartVar.wMax 		= 150;
@@ -115,6 +115,9 @@ void reinitVariables(){
 	wFiltrParm.length 	= WFILTRLEN;
 	wFiltrParm.sum    	= 0.F;
 	
+	
+	wsr = 0;
+	
 	// Переменные для запуска мотора
 	//StartVar.iMax 	= MotorParam->iMax;
 	
@@ -126,7 +129,6 @@ void reinitVariables(){
 	MRASVar.sinm 	= 0;
 	MRASVar.cosm	= 0;
 	
-	wsr = 0;
 	
 	// Токи
 	MotorCurrents.idZad = 0.F;
@@ -135,7 +137,7 @@ void reinitVariables(){
 	initPIclamp		(&wPI, 		MotorParam->kpw, 	MotorParam->kiw, 	1.F, 	StartVar.iMax,  	-1.F, 	0.F);
 	initPI			(&idPI, 	MotorParam->kpd, 	MotorParam->kid, 	1.F, 	50.F, 				-50.F, 	0.F);
 	initPI			(&iqPI, 	MotorParam->kpd, 	MotorParam->kid,	1.F, 	50.F, 				-50.F, 	0.F);	
-	initPI			(&uStartPI, kpStart, kiStart, 1.F, 50.F, -50.F, 0.F);
+	initPI			(&uStartPI, kpStart, 			kiStart, 			1.F, 	20.F, 				0.F, 	0.F);
 	
 	wTarg = 500.F;//1332.F;  // 212 Hz
 	
@@ -245,7 +247,6 @@ void runFullyControlled(void){
 void startMotor(){
 	
 	float angleSVPWM;
-	//static  //return detected_R, calc_R s here
 	static int startingCounter = 0;
 	
 	
@@ -274,28 +275,16 @@ void startMotor(){
 			reinitVariables();
 			Flags.MotorDetection = 1;
 			res_detect_counter = 0;
-		}else if(res_detect_counter < NMEAS) {
-			res_detect_counter++;
-			calc_R = uStartPI.qOut / uStartPI.qInMeas;
-			calc_Ra = sredN_f(calc_R, &rFiltrParm);
-		}else if(res_detect_counter < 2 * NMEAS){
-			StartVar.angle = M_2PI / 3.F;
-			res_detect_counter++;
-			calc_R = uStartPI.qOut / uStartPI.qInMeas;
-			calc_Rb = sredN_f(calc_R, &rFiltrParm);
-		}else if(res_detect_counter < 3 * NMEAS){
-			StartVar.angle = M_2PI / 1.5F;
-			res_detect_counter++;
-			calc_R = uStartPI.qOut / uStartPI.qInMeas;
-			calc_Rc = sredN_f(calc_R, &rFiltrParm);	
-		}else{
-			detected_R = (calc_Ra + calc_Rb + calc_Rc)/3.F;
+					
+		}else if(!calculateResistance()){
 			StartVar.w 	+= 	StartVar.eps * (float)PRPWM;
 			StartVar.angle	+= 	StartVar.w * (float)PRPWM;
 			Flags.MRASEnable = 1;
 			if(StartVar.angle > M_2PI){
 				StartVar.angle -= M_2PI; 
 			}
+		}else{
+			// some code to handle resistance error should be here
 		}
 	}
 	
@@ -303,9 +292,8 @@ void startMotor(){
 	if (StartVar.w > StartVar.wMax){
 		StartVar.w = StartVar.wMax;
 		if (startingCounter++ > 5){
-			Flags.CurrentState = STATE_RUNNING;
-			startingCounter = 0;
-			//res_flag = 1;
+			//Flags.CurrentState = STATE_RUNNING;
+			startingCounter = 0;			
 		}
 	}
 			
@@ -319,9 +307,7 @@ void startMotor(){
 	MotorVoltage.uref = uStartPI.qOut;
 			
 	angleSVPWM = StartVar.angle;
-			
 	SVPWM_f(angleSVPWM, &MotorVoltage, PulseTimes);
-			
 	PWMcompensation(Timer1Period, PulseTimes, SwichTimes, &MotorCurrents, &PWMComp);
 			
 	//запись значений, рассч. в главной функции в регистры сравнения таймера
@@ -333,7 +319,7 @@ void startMotor(){
 	MotorVoltage.uBeta = MotorVoltage.uref * arm_sin_f32(StartVar.angle);
 	
 	if(Flags.MRASEnable){		
-		calculateMRAS( &MotorCurrents, &MotorVoltage, MotorParam, &MRASVar, (float)PRPWM);
+		calculateMRAS(&MotorCurrents, &MotorVoltage, MotorParam, &MRASVar, (float)PRPWM);
 		transformFwdParkVoltage(&MotorVoltage, &MRASVar);
 		StartVar.iq = MotorCurrents.idr;
 		StartVar.id = MotorCurrents.iqr;
@@ -341,32 +327,79 @@ void startMotor(){
   
 }
 
+// returns 1 while resistance is being calculated;
+// returns 0 if resistance is calculated succesfully; 
+// returns 2 if calculated resistances are not close to each other
+// returns 3 if calculated resistances are very low
+
+int calculateResistance(){ 
+	
+	if(res_detect_counter < NMEAS) {
+		res_detect_counter++;
+		calc_R = uStartPI.qOut / uStartPI.qInMeas;
+		calc_Ra = sredN_f(calc_R, &rFiltrParm);
+		
+		return 1;
+	}else if(res_detect_counter < 2 * NMEAS){
+		
+		if (StartVar.angle < M_2PI / 3.F){
+		StartVar.angle += 0.00125f;
+		} else {
+			StartVar.angle = M_2PI / 3.F;
+			res_detect_counter++;
+		}
+		calc_R = uStartPI.qOut / uStartPI.qInMeas;
+		calc_Rb = sredN_f(calc_R, &rFiltrParm);
+		
+		return 1;
+	}else if(res_detect_counter < 3 * NMEAS){
+				
+		if (StartVar.angle < M_2PI / 1.5F){
+		StartVar.angle += 0.00125f;
+		} else {
+			StartVar.angle = M_2PI / 1.5F;
+			res_detect_counter++;
+		}
+				
+		
+		calc_R = uStartPI.qOut / uStartPI.qInMeas;
+		calc_Rc = sredN_f(calc_R, &rFiltrParm);	
+		
+		return 1;
+	} else {
+		detected_R = (calc_Ra + calc_Rb + calc_Rc)/3.F;
+		return 0;
+	}
+}
+
+
+
+
+
+
+
 void stopMotor(){
 	
 	PWM_OFF(); 
 	NTC_RELAY_OFF();
 	
 	Flags.MotorDetection = 0;
-	
+	Flags.MRASEnable = 0;
 	// Переменные для запуска мотора
 	StartVar.i 			= 0;
 	StartVar.id			= 0;
 	StartVar.iq			= 0;
-	StartVar.didt 		= 100;
-	StartVar.eps 		= 50;//50
 	StartVar.w 			= 0;
-	StartVar.wMax 		= 150;
 	StartVar.angle 		= 0;
-	StartVar.iMax 		= 5.F;
 	StartVar.u 			= 0;
 	
 	
-	WRITE_REG(TIM1->CCR1, Timer1Period/2);
-	WRITE_REG(TIM1->CCR2, Timer1Period/2);
-	WRITE_REG(TIM1->CCR3, Timer1Period/2);
+	//WRITE_REG(TIM1->CCR1, Timer1Period/2);
+	//WRITE_REG(TIM1->CCR2, Timer1Period/2);
+	//WRITE_REG(TIM1->CCR3, Timer1Period/2);
 	
 	//initPI(&uStartPI, kpStart, kiStart, 1.F, 17.F, 0.F, 0.F);
-	Flags.MRASEnable = 0;
+	
 
 }
 
