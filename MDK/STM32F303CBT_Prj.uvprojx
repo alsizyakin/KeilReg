@@ -439,6 +439,11 @@
               <FileType>1</FileType>
               <FilePath>..\Src\Tims.c</FilePath>
             </File>
+            <File>
+              <FileName>RLPsiDetect.c</FileName>
+              <FileType>1</FileType>
+              <FilePath>..\Src\RLPsiDetect.c</FilePath>
+            </File>
           </Files>
         </Group>
         <Group>

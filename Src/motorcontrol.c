@@ -7,6 +7,8 @@
 #include "mymath.h"
 #include "arm_math.h"
 #include "arm_common_tables.h"
+#include "RLPsiDetect.h"
+
 
 float Timer1Period;
 
@@ -15,7 +17,6 @@ TMotorVoltage MotorVoltage;
 
 TFiltrParm  wFiltrParm;
 extern TFiltrParm 	uFiltrParm;
-TFiltrParm  rFiltrParm;
 
 TMotorParam MotorParam_1, MotorParam_2; 
 TMotorParam *MotorParam;
@@ -32,9 +33,7 @@ float 		PulseTimes[3]={0, 0, 0};
 TPIParm uStartPI, wPI, idPI, iqPI;
 float kiStart = 5.F, kpStart = 50.F, kiw = 7.5e-6, kpw = 1.6e-2, kiD = 5.F, kpD = 50.F;
 
-float detected_R;
-int res_detect_counter = 0;
-float calc_Ra, calc_Rb, calc_Rc, calc_R;
+
 
 void initVariables(){
 	
@@ -64,10 +63,7 @@ void initVariables(){
 	wFiltrParm.length 	= WFILTRLEN;
 	wFiltrParm.sum    	= 0.F;
 	
-	// Параметры фильтра R
-	rFiltrParm.index 	= 0;
-	rFiltrParm.length 	= 128;
-	rFiltrParm.sum   	= 0.F;
+
 	
 	
 	
@@ -98,11 +94,13 @@ void initVariables(){
 	/*									      17     0		*/
 	
 	
-	
-	
 	PWMComp.dt = DTF;
 	PWMComp.uvd = 1.7F;
 	PWMComp.uvt = 1.5F;
+	
+	
+	
+	RLPsiInitFiltr();
 	
 }
 
@@ -145,7 +143,7 @@ void reinitVariables(){
 
 
 void runFullyControlled(void){
-	float angleSVPWM, uAlfa_temp, uBeta_temp, Torque;
+	float angleSVPWM, uAlfa_temp, uBeta_temp;//, Torque;
 	float temp;
 	
 	PWM_ON();
@@ -168,7 +166,7 @@ void runFullyControlled(void){
 	calculatePIclamp(&wPI);
 					 
 	MotorCurrents.iqZad = wPI.qOut;
-	Torque = 4.5F * MotorCurrents.iqZad * MotorParam->psi;
+	//Torque = 4.5F * MotorCurrents.iqZad * MotorParam->psi;
 	
 	//Преобразование Парка
 	transformFwdParkCurrent( &MotorCurrents, &MRASVar);
@@ -241,9 +239,6 @@ void runFullyControlled(void){
 		 	
 }
 
-
-
-
 float uIndAmpl = 20.F;
 float uIndAngle = 0.F;
 float uIndMgnov = 0.F;
@@ -268,9 +263,12 @@ void startMotor(){
 		if(Flags.MotorDetection == 0){
 			reinitVariables();
 			Flags.MotorDetection = 1;
-			res_detect_counter = 0;
+			RLPsiResetCounter();
+			RLPsiInitFiltr();
 					
-		}else if(!calculateResistance()){
+		}else if(!RLPsicalculateResistance(&uStartPI, &StartVar)){
+			RLPsiSetResistance(&MotorParam_1);
+			
 			StartVar.w 	+= 	StartVar.eps * (float)PRPWM;
 			StartVar.angle	+= 	StartVar.w * (float)PRPWM;
 			Flags.MRASEnable = 1;
@@ -290,6 +288,7 @@ void startMotor(){
 			startingCounter = 0;			
 		}
 	}
+	
 #endif
 //#define INDCALC
 #ifdef INDCALC
@@ -316,19 +315,12 @@ void startMotor(){
 	}
 	indVolts[indexIndCur] = uIndMgnov;
 	
-
-
-
 #else
 	uStartPI.qOutMax =  (MotorVoltage.udc_izm - 3.F)*0.5747F;
 	uStartPI.qInRef  =  StartVar.i;
 	uStartPI.qInMeas =  1.F/quickSqrt(MotorCurrents.iAlfa * MotorCurrents.iAlfa + MotorCurrents.iBeta * MotorCurrents.iBeta);
 	calculatePI(&uStartPI);
-	
 	MotorVoltage.uref = uStartPI.qOut;
-
-
-
 	angleSVPWM = StartVar.angle;
 #endif		
 		
@@ -353,55 +345,6 @@ void startMotor(){
   
 }
 
-// returns 1 while resistances are being calculated;
-// returns 0 if resistance is calculated succesfully; 
-// returns 2 if calculated resistances are not close to each other
-// returns 3 if calculated resistances are very low
-
-int calculateResistance(){ 
-	
-	if(res_detect_counter < NMEAS) {
-		res_detect_counter++;
-		calc_R = uStartPI.qOut / uStartPI.qInMeas;
-		calc_Ra = sredN_f(calc_R, &rFiltrParm);
-		
-		return 1;
-	}else if(res_detect_counter < 2 * NMEAS){
-		
-		if (StartVar.angle < M_2PI / 3.F){
-		StartVar.angle += 0.00125f;
-		} else {
-			StartVar.angle = M_2PI / 3.F;
-			res_detect_counter++;
-		}
-		calc_R = uStartPI.qOut / uStartPI.qInMeas;
-		calc_Rb = sredN_f(calc_R, &rFiltrParm);
-		
-		return 1;
-	}else if(res_detect_counter < 3 * NMEAS){
-				
-		if (StartVar.angle < M_2PI / 1.5F){
-		StartVar.angle += 0.00125f;
-		} else {
-			StartVar.angle = M_2PI / 1.5F;
-			res_detect_counter++;
-		}
-				
-		
-		calc_R = uStartPI.qOut / uStartPI.qInMeas;
-		calc_Rc = sredN_f(calc_R, &rFiltrParm);	
-		
-		return 1;
-	} else {
-		detected_R = (calc_Ra + calc_Rb + calc_Rc)/3.F;
-		return 0;
-	}
-}
-
-
-
-
-
 
 
 void stopMotor(){
@@ -419,7 +362,7 @@ void stopMotor(){
 	StartVar.angle 		= 0;
 	StartVar.u 			= 0;
 	
-	
+	//RLPsiResetCounter();
 	//WRITE_REG(TIM1->CCR1, Timer1Period/2);
 	//WRITE_REG(TIM1->CCR2, Timer1Period/2);
 	//WRITE_REG(TIM1->CCR3, Timer1Period/2);

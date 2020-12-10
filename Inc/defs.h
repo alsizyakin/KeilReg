@@ -41,7 +41,7 @@
 #define WEPS					0.025F // acceleration from wTarg to WMAX while drive works
 #define WMAX					1332.F //maximum drive speed
 
-#define NMEAS 					500  // period for measuring os phase resistance in PWM tacts	
+	
 
 #ifdef USE_INDICATION_BOARD 
 		// Buttons

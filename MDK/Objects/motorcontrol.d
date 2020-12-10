@@ -20,3 +20,4 @@
 .\objects\motorcontrol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\float.h
 .\objects\motorcontrol.o: C:\Keil_v5\ARM\ARMCC\Bin\..\include\limits.h
 .\objects\motorcontrol.o: C:\Users\FluxUser\AppData\Local\Arm\Packs\ARM\CMSIS\5.7.0\CMSIS\DSP\Include\arm_common_tables.h
+.\objects\motorcontrol.o: ..\Inc\RLPsiDetect.h
