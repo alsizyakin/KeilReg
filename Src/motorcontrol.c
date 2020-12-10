@@ -76,7 +76,7 @@ void initVariables(){
 	StartVar.id			= 0;
 	StartVar.iq			= 0;
 	StartVar.didt 		= 32.F;
-	StartVar.eps 		= 50;//50
+	StartVar.eps 		= 50;
 	StartVar.w 			= 0;
 	StartVar.wMax 		= 150;
 	StartVar.angle 		= 0;
@@ -234,8 +234,8 @@ void runFullyControlled(void){
 		
 	}
 	
-	if((wTarg += 0.025F) > 1332.F){
-		wTarg = 1332.F;
+	if((wTarg += WEPS) > WMAX){
+		wTarg = WMAX;
 	}
 	
 		 	
@@ -243,6 +243,13 @@ void runFullyControlled(void){
 
 
 
+
+float uIndAmpl = 20.F;
+float uIndAngle = 0.F;
+float uIndMgnov = 0.F;
+float indCurs[47];
+float indVolts[47];
+int lenIndCur = 47, indexIndCur = 0;
 
 void startMotor(){
 	
@@ -252,21 +259,8 @@ void startMotor(){
 	
 	PWM_ON();
 	
-//#define START_TEST
-	
-#ifdef START_TEST  //TEST of current sense for this configuration 
-	if (startingCounter++ > 2500){
-		StartVar.i = 2.F;
-		if (startingCounter >5000){
-			startingCounter = 0;
-		}
-	
-	}else{
-		StartVar.i = 12;
-	}
-#else	
-
-		
+#define RESCALC
+#ifdef RESCALC		
 	if(StartVar.i < StartVar.iMax){
 		StartVar.i += StartVar.didt * (float)PRPWM;
 	}else {
@@ -296,17 +290,49 @@ void startMotor(){
 			startingCounter = 0;			
 		}
 	}
-			
-#endif	/*	END of test	*/
+#endif
+//#define INDCALC
+#ifdef INDCALC
 
-	uStartPI.qOutMax =  (MotorVoltage.udc_izm - 3)*0.5747F;
+	float  curVal =  1.F/quickSqrt(MotorCurrents.iAlfa * MotorCurrents.iAlfa + MotorCurrents.iBeta * MotorCurrents.iBeta);
+	if(MotorCurrents.iAlfa < 0){
+		curVal *= -1.f;
+	}
+	indCurs[indexIndCur++] = curVal;
+	indexIndCur = indexIndCur % lenIndCur;
+	StartVar.angle = 0;
+	uIndAngle += WMAX * PRPWM;
+	if (uIndAngle > M_2PI){
+		uIndAngle -= M_2PI; 
+	}
+	uIndMgnov = uIndAmpl * arm_sin_f32(uIndAngle);
+	
+	if(uIndMgnov >=0){
+		MotorVoltage.uref = uIndMgnov;
+		angleSVPWM = 0;
+	}else{
+		MotorVoltage.uref = - uIndMgnov;
+		angleSVPWM = M_PI;
+	}
+	indVolts[indexIndCur] = uIndMgnov;
+	
+
+
+
+#else
+	uStartPI.qOutMax =  (MotorVoltage.udc_izm - 3.F)*0.5747F;
 	uStartPI.qInRef  =  StartVar.i;
 	uStartPI.qInMeas =  1.F/quickSqrt(MotorCurrents.iAlfa * MotorCurrents.iAlfa + MotorCurrents.iBeta * MotorCurrents.iBeta);
 	calculatePI(&uStartPI);
 	
 	MotorVoltage.uref = uStartPI.qOut;
-			
+
+
+
 	angleSVPWM = StartVar.angle;
+#endif		
+		
+		
 	SVPWM_f(angleSVPWM, &MotorVoltage, PulseTimes);
 	PWMcompensation(Timer1Period, PulseTimes, SwichTimes, &MotorCurrents, &PWMComp);
 			
@@ -327,7 +353,7 @@ void startMotor(){
   
 }
 
-// returns 1 while resistance is being calculated;
+// returns 1 while resistances are being calculated;
 // returns 0 if resistance is calculated succesfully; 
 // returns 2 if calculated resistances are not close to each other
 // returns 3 if calculated resistances are very low
