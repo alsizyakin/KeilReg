@@ -13,6 +13,7 @@
 #include "motorcontrol.h"
 #include "delay.h"
 #include "Tims.h"
+#include "uart.h"
 
 
 /* Private function prototypes -----------------------------------------------*/
@@ -23,6 +24,9 @@ void runningState(void);
 
 float Therm = 0;
 TMasADC MasADC; 
+
+uint8_t uart_rx_data[UART_DATA_SIZE];
+uint8_t uart_tx_data[UART_DATA_SIZE];
 
 extern TFlags Flags;
 extern TMotorCurrents MotorCurrents; 
@@ -39,6 +43,9 @@ int main(void){
 	
 	SET_BIT(DBGMCU->APB2FZ,  DBGMCU_APB2_FZ_DBG_TIM1_STOP);
  
+	for(int i = 0; i < UART_DATA_SIZE; i++){
+		uart_tx_data[i] = i;
+	}
 
 	/* Configure the system clock to 72 MHz */
 	SystemClock_Config();
@@ -54,9 +61,12 @@ int main(void){
 	init_adc();
 	init_awd();
 	init_dma(&MasADC);
+	init_uart(&uart_rx_data[0], &uart_tx_data[0]); 
 	init_timer1();
 	
 	initVariables();
+	
+	SET_BIT(USART1->ICR, USART_ICR_IDLECF);
 		
 	Flags.CurrentMotor = 0;
 	Flags.MeasReady = 0;
@@ -106,8 +116,6 @@ int main(void){
 				break;
 									
 			case STATE_FAULT:
-								
-				
 				LED_ON(LED_ALL);
 				stopMotor();
 				if (fltCnt++ > 50000){

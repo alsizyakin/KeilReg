@@ -156,6 +156,7 @@ void init_ports(void){
 	CLEAR_BIT(GPIOA->PUPDR,   	(GPIO_PUPDR_PUPDR12));
 
 
+
 }
 
 void init_comp(void){
